@@ -2,4 +2,5 @@
 
 export(add_new_rows)
 export(build_history)
+export(eval_seasonal_diff)
 export(query_write_rds)
