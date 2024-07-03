@@ -6,7 +6,7 @@
 #' @param df_new Dataframe/tibble containing new data for relevant KPI.
 #' @param kpi KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
 #'
-#' @return
+#' @return Nothing returned, just stops execution if error.
 #'
 #' @examples
 #' build_history_checks(old, new, "2")
