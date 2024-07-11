@@ -1,11 +1,10 @@
-#' Title
+#' Create and format new historical database for build_history()
 #'
-#' @param kpi_number
-#' @param df_new
+#' @param kpi_number Passed from build_history()
+#' @param df_new Passed from build_history()
 #'
-#' @return
+#' @return New historical database in the build_history() environment
 #'
-#' @examples
 build_history_format <- function(kpi_number, df_new) {
 
   if(kpi_number == "1.1-1.3"){
