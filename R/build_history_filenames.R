@@ -4,7 +4,6 @@
 #'
 #' @return List of variables, important ones are [1] filename_bckp and [2] filename_hist
 #'
-#' @examples
 build_history_filenames <- function(kpi_number) {
   historical <- "/aaa_kpi_historical_"
   bckp <- "_bckp.rds"

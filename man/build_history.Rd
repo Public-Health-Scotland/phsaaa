@@ -4,14 +4,14 @@
 \alias{build_history}
 \title{Create backup and update new historical database of AAA screening KPIs, only runs if season is "autumn"}
 \usage{
-build_history(df_hist, df_new, kpi)
+build_history(df_hist, df_new, kpi_number)
 }
 \arguments{
 \item{df_hist}{Dataframe/tibble which contains historical data for relevant KPI.}
 
 \item{df_new}{Dataframe/tibble containing new data for relevant KPI.}
 
-\item{kpi}{KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"}
+\item{kpi_number}{KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"}
 }
 \value{
 New historical dataframe/tibble updated for this analysis round.

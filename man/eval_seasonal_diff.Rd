@@ -27,4 +27,6 @@ x <- eval_seasonal_diff({"it's spring!"}, {"it's autumn!"})
 
 print(x)
 [1] "it's autumn!"
+
+
 }
