@@ -1,3 +1,12 @@
+#' Helper to build_history() which creates new historical database and formats it
+#'
+#' @param df_hist
+#' @param df_new
+#' @param kpi_number
+#'
+#' @return
+#'
+#' @examples
 build_history_create_new_hist <- function(df_hist, df_new, kpi_number) {
 
   new_hist_db <- add_new_rows(df1 = df_hist, df2 = df_new, fin_year, kpi) |>
