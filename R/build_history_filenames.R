@@ -2,7 +2,7 @@
 #'
 #' @param kpi_number Gets passed from the build_history() function, 1.1-1.3/1.4/2/3 as options
 #'
-#' @return List of variables, important ones are [1] filename_bckp and [2] filename_hist
+#' @return List of variables, important ones are 1 filename_bckp and 2 filename_hist
 #'
 build_history_filenames <- function(kpi_number) {
   historical <- "/aaa_kpi_historical_"
