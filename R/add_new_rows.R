@@ -27,29 +27,13 @@ add_new_rows <- function(df1, df2, ...){
 
 
   # initial tests
-  stopifnot(
-    "df1 is not a dataframe/tibble" = ("data.frame" %in% class(df1))
-    )
-  stopifnot(
-    "df2 is not a dataframe/tibble" = ("data.frame" %in% class(df2))
-    )
-  stopifnot(
-    "column names are not the same in both dataframes" = length(setdiff(names(df1), names(df2))) == 0
-  )
-  stopifnot(
-    "df1 has no observations" = nrow(df1) >= 1
-  )
-  stopifnot(
-    "df2 has no observations" = nrow(df2) >= 1
-  )
-
+  add_new_rows_tests(df1, df2)
 
   # check distinct values within columns in df2
   distinct_df2 <- df2 |> dplyr::distinct(!!!cols)
 
   # select full information in df1 for cols
   full_df1 <- df1 |> dplyr::select(!!!cols)
-
 
   # semi-join checks dups - returns values in both dfs
   dups <- full_df1 |>

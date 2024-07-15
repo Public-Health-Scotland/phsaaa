@@ -10,7 +10,7 @@ build_history_filenames(kpi_number)
 \item{kpi_number}{Gets passed from the build_history() function, 1.1-1.3/1.4/2/3 as options}
 }
 \value{
-List of variables, important ones are \link{1} filename_bckp and \link{2} filename_hist
+List of variables, important ones are 1 filename_bckp and 2 filename_hist
 }
 \description{
 Create filepaths for saving outputs of build_history() function.
