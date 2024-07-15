@@ -11,7 +11,7 @@ add_new_rows(df1, df2, ...)
 
 \item{df2}{new data frame/tibble that contain rows to add (must have exactly the same columns as df1)}
 
-\item{...}{unquoted column names that you want to check duplication within}
+\item{...}{unquoted column names which specify grouping variables across which you want to check for duplication (no limit on how many or few you can use)}
 }
 \value{
 If no duplication, a tibble containing unique rows from data frame 1 and 2. If duplication exists, halts execution with error message.
