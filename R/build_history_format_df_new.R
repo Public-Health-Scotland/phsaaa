@@ -5,7 +5,7 @@
 #'
 #' @return New historical database in the build_history() environment
 #'
-build_history_format <- function(kpi_number, df_new) {
+build_history_format_df_new <- function(kpi_number, df_new) {
 
   if(kpi_number == "1.1-1.3"){
     df_new <- df_new |>
