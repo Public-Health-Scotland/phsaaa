@@ -4,6 +4,7 @@
 #' Can be used to run functions alone, or assign values to variables in the global environment.
 #' Note: function includes 'season' variable which should be defined as "spring" or "autumn" before using the function.
 #'
+#' @param season variable indicating season, either "spring" or "autumn"
 #' @param expr_spring {expression} to be evaluated when season == "spring"
 #' @param expr_autumn {expression} to be evaluated when season == "autumn"
 #'
@@ -20,7 +21,7 @@
 #' [1] "it's autumn!"
 #'
 #'
-eval_seasonal_diff <- function(expr_spring, expr_autumn) {
+eval_seasonal_diff <- function(season, expr_spring, expr_autumn) {
 
   # ensuring season exists
   stopifnot(
