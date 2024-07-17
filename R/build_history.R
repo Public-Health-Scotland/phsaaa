@@ -50,7 +50,7 @@ build_history <- function(df_hist, df_new, kpi_number) {
 # Save historical backup --------------------------------------------------
       # save a backup of df_hist
       # if kpi_report_year[2] already present, means it's already been updated this analysis round
-      if(!kpi_report_years[2] %in% df_hist$fin_year & !kpi == "1.4"){
+      if(!kpi_report_years[2] %in% df_hist$fin_year & !kpi_number == "1.4"){
         # write backup file
         query_write_rds(df_hist, paste0(hist_path, filenames$filename_bckp))
         # change permissions to give the group read/write
@@ -72,7 +72,7 @@ build_history <- function(df_hist, df_new, kpi_number) {
 # New historical database -------------------------------------------------
 
       # create new historical database
-      build_history_create_new_hist(df_hist, df_new, kpi_number)
+      new_hist_db <- build_history_create_new_hist(df_hist, df_new, kpi_number)
 
       print("Table of new_hist_db$kpi, new_hist_db$fin_year:")
       print(table(new_hist_db$kpi, new_hist_db$fin_year))

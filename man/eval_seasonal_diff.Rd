@@ -4,9 +4,11 @@
 \alias{eval_seasonal_diff}
 \title{Evaluate one of two expressions depending on the season.}
 \usage{
-eval_seasonal_diff(expr_spring, expr_autumn)
+eval_seasonal_diff(season, expr_spring, expr_autumn)
 }
 \arguments{
+\item{season}{variable indicating season, either "spring" or "autumn"}
+
 \item{expr_spring}{{expression} to be evaluated when season == "spring"}
 
 \item{expr_autumn}{{expression} to be evaluated when season == "autumn"}

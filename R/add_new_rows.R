@@ -2,7 +2,7 @@
 #'
 #' @param df1 pre-existing data frame/tibble that you want to add rows to
 #' @param df2 new data frame/tibble that contain rows to add (must have exactly the same columns as df1)
-#' @param ... unquoted column names that you want to check duplication within
+#' @param ... unquoted column names which specify grouping variables across which you want to check for duplication (no limit on how many or few you can use)
 #'
 #' @return If no duplication, a tibble containing unique rows from data frame 1 and 2. If duplication exists, halts execution with error message.
 #' @export
@@ -27,29 +27,13 @@ add_new_rows <- function(df1, df2, ...){
 
 
   # initial tests
-  stopifnot(
-    "df1 is not a dataframe/tibble" = ("data.frame" %in% class(df1))
-    )
-  stopifnot(
-    "df2 is not a dataframe/tibble" = ("data.frame" %in% class(df2))
-    )
-  stopifnot(
-    "column names are not the same in both dataframes" = length(setdiff(names(df1), names(df2))) == 0
-  )
-  stopifnot(
-    "df1 has no observations" = nrow(df1) >= 1
-  )
-  stopifnot(
-    "df2 has no observations" = nrow(df2) >= 1
-  )
-
+  add_new_rows_tests(df1, df2)
 
   # check distinct values within columns in df2
   distinct_df2 <- df2 |> dplyr::distinct(!!!cols)
 
   # select full information in df1 for cols
   full_df1 <- df1 |> dplyr::select(!!!cols)
-
 
   # semi-join checks dups - returns values in both dfs
   dups <- full_df1 |>

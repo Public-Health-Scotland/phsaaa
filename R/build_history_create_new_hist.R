@@ -25,6 +25,7 @@ build_history_create_new_hist <- function(df_hist, df_new, kpi_number) {
                  "KPI 1.4a", "KPI 1.4b")))
   }
 
-  new_hist_db <- new_hist_db |>
+  new_hist_db |>
     dplyr::arrange(kpi, fin_year, hbres)
+
 }
