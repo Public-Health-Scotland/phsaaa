@@ -48,9 +48,11 @@ build_history <- function(df_hist, df_new, kpi_number) {
 
 
 # Save historical backup --------------------------------------------------
-      # save a backup of df_hist
-      # if kpi_report_year[2] already present, means it's already been updated this analysis round
-      if(!kpi_report_years[2] %in% df_hist$fin_year & !kpi_number == "1.4"){
+      # read in backup, check that kpi_report_years[2] is not present
+      # then save the current df_hist as the new backup file
+      df_bckp <- read_rds(paste0(hist_path, filenames$filename_bckp))
+
+      if(!kpi_report_years[2] %in% df_bckp$fin_year & !kpi_number == "1.4"){
         # write backup file
         query_write_rds(df_hist, paste0(hist_path, filenames$filename_bckp))
         # change permissions to give the group read/write
