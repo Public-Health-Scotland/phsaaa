@@ -65,16 +65,16 @@ build_history <- function(df_hist, df_new, kpi_number) {
       }
 
       # format df_new for inclusion
-      build_history_format_df_new(kpi_number, df_new)
+      df_new_filtered <- build_history_format_df_new(kpi_number, df_new)
 
-      print("Table of df_new$kpi, df_new$fin_year:")
-      print(table(df_new$kpi, df_new$fin_year))
+      print("Table of df_new_filtered$kpi, df_new_filtered$fin_year:")
+      print(table(df_new_filtered$kpi, df_new_filtered$fin_year))
 
 
 # New historical database -------------------------------------------------
 
       # create new historical database
-      new_hist_db <- build_history_create_new_hist(df_hist, df_new, kpi_number)
+      new_hist_db <- build_history_create_new_hist(df_hist, df_new_filtered, kpi_number)
 
       print("Table of new_hist_db$kpi, new_hist_db$fin_year:")
       print(table(new_hist_db$kpi, new_hist_db$fin_year))
