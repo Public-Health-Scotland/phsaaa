@@ -2,15 +2,13 @@
 #'
 #' Ensures all variables required to run build_history() exist within the global environment.
 #'
-#' @param df_hist Dataframe/tibble which contains historical data for relevant KPI.
-#' @param df_new Dataframe/tibble containing new data for relevant KPI.
 #' @param kpi_number KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
 #'
 #' @return Nothing returned, just stops execution if error.
 #'
 #' @examples
 #' build_history_checks(old, new, "2")
-build_history_checks <- function(df_hist, df_new, kpi_number){
+build_history_checks <- function(kpi_number){
   stopifnot(
     "KPI inputted is not included in accepted list, see documentation" = kpi_number %in% c("1.1-1.3", "1.4", "2", "3")
   )

@@ -4,13 +4,9 @@
 \alias{build_history_checks}
 \title{Check global environment for build_history() function.}
 \usage{
-build_history_checks(df_hist, df_new, kpi_number)
+build_history_checks(kpi_number)
 }
 \arguments{
-\item{df_hist}{Dataframe/tibble which contains historical data for relevant KPI.}
-
-\item{df_new}{Dataframe/tibble containing new data for relevant KPI.}
-
 \item{kpi_number}{KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"}
 }
 \value{
