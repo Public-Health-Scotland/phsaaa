@@ -7,7 +7,7 @@
 build_history_filenames(kpi_number)
 }
 \arguments{
-\item{kpi_number}{Gets passed from the build_history() function, 1.1-1.3/1.4/2/3 as options}
+\item{kpi_number}{KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"}
 }
 \value{
 List of variables, important ones are 1 filename_bckp and 2 filename_hist
