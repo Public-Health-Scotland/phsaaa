@@ -1,6 +1,6 @@
 #' Create filepaths for saving outputs of build_history() function.
 #'
-#' @param kpi_number Gets passed from the build_history() function, 1.1-1.3/1.4/2/3 as options
+#' @param kpi_number KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
 #'
 #' @return List of variables, important ones are 1 filename_bckp and 2 filename_hist
 #'

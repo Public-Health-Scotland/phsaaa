@@ -1,12 +1,14 @@
 #' Helper to build_history() which creates new historical database and formats it
 #'
-#' @param df_hist Passed from build_history()
-#' @param df_new Passed from build_history()
-#' @param kpi_number Passed from build_history()
+#' @param df_hist Dataframe/tibble which contains historical data for relevant KPI.
+#' @param df_new Dataframe/tibble containing new data for relevant KPI.
+#' @param kpi_number KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
+#' @param fy_list Character vector of financial years in data, in chronological order
+#' @param hb_list Character vector of Health Board names, in alphabetic order
 #'
 #' @return Creates new hist_db within build_history() environment
 #'
-build_history_create_new_hist <- function(df_hist, df_new, kpi_number) {
+build_history_create_new_hist <- function(df_hist, df_new, kpi_number, fy_list = fy_list, hb_list = hb_list) {
 
   new_hist_db <- add_new_rows(df1 = df_hist, df2 = df_new, fin_year, kpi) |>
     dplyr::mutate(fin_year = forcats::fct_relevel(fin_year, c(fy_list)),
