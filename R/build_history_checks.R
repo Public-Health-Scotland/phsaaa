@@ -13,15 +13,6 @@ build_history_checks <- function(kpi_number){
     "KPI inputted is not included in accepted list, see documentation" = kpi_number %in% c("1.1-1.3", "1.4", "2", "3")
   )
   stopifnot(
-    "no 'season' variable defined in global environment" = exists("season", envir = globalenv())
-  )
-  stopifnot(
-    "no 'hist_path' variable defined in global environment" = exists("hist_path", envir = globalenv())
-  )
-  stopifnot(
-    "no 'kpi_report_years' variable defined in global environment" = exists("kpi_report_years", envir = globalenv())
-  )
-  stopifnot(
     "no 'fy_list' variable defined in global environment" = exists("fy_list", envir = globalenv())
   )
   stopifnot(

@@ -10,17 +10,23 @@
 #' @param df_hist Dataframe/tibble which contains historical data for relevant KPI.
 #' @param df_new Dataframe/tibble containing new data for relevant KPI.
 #' @param kpi_number KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
+#' @param season Season of analysis, options are "Spring" or "Autumn"
+#' @param kpi_report_years Character vector, must be >= 3 length. Includes financial year being published, plus two prior.
+#' @param fy_list Character vector of financial years in data, in chronological order
+#' @param hb_list Character vector of Health Board names, in alphabetic order
+#' @param year_n Used for KPIs 1.1-1.3 or 1.4, character variable of a financial year. Default is 'year2', which corresponds to the financial year following that which is being published.
+#' @param hist_path Filepath that points to the output directory - this is where previous historical data exists.
 #'
 #' @return New historical dataframe/tibble updated for this analysis round.
 #' @export
 #'
 #' @examples
-#' # (example does not account for additional global environments required)
+#'
 #'
 #' old <- dplyr::tibble(fin_year = c("2021/22", "2022/23"), kpi = "2.2", hbres = "Lothian", value = c(1,2))
 #' new <- dplyr::tibble(fin_year = "2023/24", kpi = "2.2", hbres = "Lothian", value = 4)
 #'
-#' new_hist_db <- build_history(old, new, "2")
+#' new_hist_db <- build_history(old, new, "2", season = "autumn", kpi_report_years = c("2021/22", "2022/23", "2023/24"), fy_list = fy_list, hb_list = hb_list, year_n = "2024/25")
 #'
 #' print(new_hist_db)
 #'
@@ -31,7 +37,15 @@
 #' # 2  2022/23      2.2      Lothian     2
 #' # 3 2023/24       2.2      Lothian     4
 
-build_history <- function(df_hist, df_new, kpi_number) {
+build_history <- function(df_hist,
+                          df_new,
+                          kpi_number,
+                          season = season,
+                          kpi_report_years = kpi_report_years,
+                          fy_list = fy_list,
+                          hb_list = hb_list,
+                          year_n = year2,
+                          hist_path = hist_path) {
   if (season == "spring") {
     table(df_hist$kpi, df_hist$fin_year)
 
@@ -41,7 +55,7 @@ build_history <- function(df_hist, df_new, kpi_number) {
 
     if (season == "autumn") {
       # initial tests
-      build_history_checks(df_hist, df_new, kpi_number)
+      build_history_checks(kpi_number)
 
       # create filename based on KPI inputted
       filenames <- build_history_filenames(kpi_number)
@@ -50,7 +64,7 @@ build_history <- function(df_hist, df_new, kpi_number) {
 # Save historical backup --------------------------------------------------
       # read in backup, check that kpi_report_years[2] is not present
       # then save the current df_hist as the new backup file
-      df_bckp <- read_rds(paste0(hist_path, filenames$filename_bckp))
+      df_bckp <- readr::read_rds(paste0(hist_path, filenames$filename_bckp))
 
       if(!kpi_report_years[2] %in% df_bckp$fin_year & !kpi_number == "1.4"){
         # write backup file

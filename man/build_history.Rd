@@ -4,7 +4,17 @@
 \alias{build_history}
 \title{Create backup and update new historical database of AAA screening KPIs, only runs if season is "autumn"}
 \usage{
-build_history(df_hist, df_new, kpi_number)
+build_history(
+  df_hist,
+  df_new,
+  kpi_number,
+  season = season,
+  kpi_report_years = kpi_report_years,
+  fy_list = fy_list,
+  hb_list = hb_list,
+  year_n = year2,
+  hist_path = hist_path
+)
 }
 \arguments{
 \item{df_hist}{Dataframe/tibble which contains historical data for relevant KPI.}
@@ -12,6 +22,18 @@ build_history(df_hist, df_new, kpi_number)
 \item{df_new}{Dataframe/tibble containing new data for relevant KPI.}
 
 \item{kpi_number}{KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"}
+
+\item{season}{Season of analysis, options are "Spring" or "Autumn"}
+
+\item{kpi_report_years}{Character vector, must be >= 3 length. Includes financial year being published, plus two prior.}
+
+\item{fy_list}{Character vector of financial years in data, in chronological order}
+
+\item{hb_list}{Character vector of Health Board names, in alphabetic order}
+
+\item{year_n}{Used for KPIs 1.1-1.3 or 1.4, character variable of a financial year. Default is 'year2', which corresponds to the financial year following that which is being published.}
+
+\item{hist_path}{Filepath that points to the output directory - this is where previous historical data exists.}
 }
 \value{
 New historical dataframe/tibble updated for this analysis round.
@@ -25,12 +47,12 @@ Function requires multiple global environment variables to be specified:
 'hb_list' - list of NHS Health Boards in alphabetical order
 }
 \examples{
-# (example does not account for additional global environments required)
+
 
 old <- dplyr::tibble(fin_year = c("2021/22", "2022/23"), kpi = "2.2", hbres = "Lothian", value = c(1,2))
 new <- dplyr::tibble(fin_year = "2023/24", kpi = "2.2", hbres = "Lothian", value = 4)
 
-new_hist_db <- build_history(old, new, "2")
+new_hist_db <- build_history(old, new, "2", season = "autumn", kpi_report_years = c("2021/22", "2022/23", "2023/24"), fy_list = fy_list, hb_list = hb_list, year_n = "2024/25")
 
 print(new_hist_db)
 
