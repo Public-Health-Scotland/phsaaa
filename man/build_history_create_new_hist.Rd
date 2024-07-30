@@ -4,14 +4,24 @@
 \alias{build_history_create_new_hist}
 \title{Helper to build_history() which creates new historical database and formats it}
 \usage{
-build_history_create_new_hist(df_hist, df_new, kpi_number)
+build_history_create_new_hist(
+  df_hist,
+  df_new,
+  kpi_number,
+  fy_list = fy_list,
+  hb_list = hb_list
+)
 }
 \arguments{
-\item{df_hist}{Passed from build_history()}
+\item{df_hist}{Dataframe/tibble which contains historical data for relevant KPI.}
 
-\item{df_new}{Passed from build_history()}
+\item{df_new}{Dataframe/tibble containing new data for relevant KPI.}
 
-\item{kpi_number}{Passed from build_history()}
+\item{kpi_number}{KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"}
+
+\item{fy_list}{Character vector of financial years in data, in chronological order}
+
+\item{hb_list}{Character vector of Health Board names, in alphabetic order}
 }
 \value{
 Creates new hist_db within build_history() environment
