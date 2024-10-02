@@ -83,7 +83,8 @@ build_history <- function(df_hist,
       }
 
       # format df_new for inclusion
-      df_new_filtered <- build_history_format_df_new(kpi_number = kpi_number, df_new = df_new)
+      df_new_filtered <- build_history_format_df_new(kpi_number = kpi_number, df_new = df_new,
+                                                     fys_in_report = fys_in_report)
 
       print("Table of df_new_filtered$kpi, df_new_filtered$fin_year:")
       print(table(df_new_filtered$kpi, df_new_filtered$fin_year))
