@@ -31,7 +31,9 @@
 #' old <- dplyr::tibble(fin_year = c("2021/22", "2022/23"), kpi = "2.2", hbres = "Lothian", value = c(1,2))
 #' new <- dplyr::tibble(fin_year = "2023/24", kpi = "2.2", hbres = "Lothian", value = 4)
 #'
-#' new_hist_db <- build_history(old, new, "2", season_var = "autumn", fys_in_report = c("2021/22", "2022/23", "2023/24"), list_of_fys = list_of_fys, list_of_hbs = list_of_hbs)
+#' new_hist_db <- build_history(old, new, "2", season_var = "autumn",
+#'                              fys_in_report = c("2021/22", "2022/23", "2023/24"),
+#'                              list_of_fys, list_of_hbs)
 #'
 #' print(new_hist_db)
 #'
@@ -120,42 +122,22 @@ build_history <- function(df_hist,
 
 # build_history_checks ----------------------------------------------------
 
-#' Check global environment for build_history() function.
-#'
-#' Ensures all variables required to run build_history() exist within the global environment.
-#'
-#' @param kpi_number KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
-#'
-#' @return Nothing returned, just stops execution if error.
-#'
-#' @examples
-#' build_history_checks(old, new, "2")
+# FUNCTION TO CHECK INPUTS
+## currently just the kpi_number input, which is a character variable
+
 build_history_checks <- function(kpi_number){
   stopifnot(
     "KPI inputted is not included in accepted list, see documentation" = kpi_number %in% c("1.1-1.3", "1.4", "2", "3")
   )
-  # stopifnot(
-  #   "no 'list_of_fys' variable defined in global environment" = exists("list_of_fys", envir = globalenv())
-  # )
-  # stopifnot(
-  #   "no 'list_of_hbs' variable defined in global environment" = exists("list_of_hbs", envir = globalenv())
-  # )
-  # if (kpi_number %in% c("1.1-1.3", "1.4")) {
-  #   stopifnot(
-  #     "no 'year2' variable defined in global environment" = exists("year2", envir = globalenv())
-  #   )
-  # }
 }
 
 
 # build_history_filenames -------------------------------------------------
 
-#' Create filepaths for saving outputs of build_history() function.
-#'
-#' @param kpi_number KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
-#'
-#' @return List of variables, important ones are 1 filename_bckp and 2 filename_hist
-#'
+# FUNCTION TO CREATE FILEPATHS FOR SAVING BUILD_HISTORY() OUTPUTS
+## takes the kpi number as only input to create the paths
+
+
 build_history_filenames <- function(kpi_number) {
   historical <- "/aaa_kpi_historical_"
   bckp <- "_bckp.rds"
@@ -171,15 +153,9 @@ build_history_filenames <- function(kpi_number) {
 
 # build_history_format_df_new ---------------------------------------------
 
-#' Create and format new historical database for build_history()
-#'
-#' @param kpi_number KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
-#' @param df_new Dataframe/tibble containing new data for relevant KPI.
-#' @param year_n Used for KPIs 1.1-1.3 or 1.4, character variable of a financial year. Default is 'year2', which corresponds to the financial year following that which is being published.
-#' @param fys_in_report Character vector, must be >= 3 length. Includes financial year being published, plus two prior.
-#'
-#' @return New historical database in the build_history() environment
-#'
+# FUNCTION TO FORMAT NEW DATA TO BE ADDED TO HISTORICAL IN BUILD_HISTORY()
+## takes KPI number (character), the dataframe to be added, and the financial years within the report (filters for just most recent year)
+
 build_history_format_df_new <- function(kpi_number, df_new, fys_in_report) {
 
   if(kpi_number == "1.1-1.3"){
@@ -199,16 +175,9 @@ build_history_format_df_new <- function(kpi_number, df_new, fys_in_report) {
 
 # build_history_create_new_hist -------------------------------------------
 
-#' Helper to build_history() which creates new historical database and formats it
-#'
-#' @param df_hist Dataframe/tibble which contains historical data for relevant KPI.
-#' @param df_new Dataframe/tibble containing new data for relevant KPI.
-#' @param kpi_number KPI being added to the historical database, options are: "1.1-1.3", "1.4", "2", or "3"
-#' @param list_of_fys Character vector of financial years in data, in chronological order
-#' @param list_of_hbs Character vector of Health Board names, in alphabetic order
-#'
-#' @return Creates new hist_db within build_history() environment
-#'
+# FUNCTION TO CREATE NEW HISTORICAL DATAFRAME WITH MOST RECENT DATA
+## previous historical df, new data to be added, the KPI in question, and lists of all FYs and HBs we want included
+
 build_history_create_new_hist <- function(df_hist, df_new, kpi_number, list_of_fys, list_of_hbs) {
 
   new_hist_db <- add_new_rows(df1 = df_hist, df2 = df_new, fin_year, kpi) |>
