@@ -2,6 +2,7 @@
 
 export(add_new_rows)
 export(build_history)
+export(create_aaa_gp_outputs)
 export(eval_seasonal_diff)
 export(format_excel_hyperlink)
 export(query_function)
