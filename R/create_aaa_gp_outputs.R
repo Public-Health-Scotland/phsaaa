@@ -57,34 +57,21 @@ create_aaa_gp_outputs <- function(hb_name, financial_year, coverage_data, selfre
   ### general text
   text$disclosure_text <- c("Practice-level data and disclosive cells",
                             "These data are released for management purposes and have not been adjusted to conform to PHS’s Statistical Disclosure Control protocol. The tables may contain disclosive cells (cells with small numbers that might enable an individual patient or member of staff to be identified, perhaps with the aid of further knowledge of the topic) and should not be published without further consideration of the contents in light of the guidance (link below). Please contact phs.aaascreenstats@phs.scot if you have any queries regarding this.")
-  text$disclosure_link <- phsaaa::format_excel_hyperlink("PHS Statistical Disclosure Control", "https://publichealthscotland.scot/publications/public-health-scotland-statistical-disclosure-protocol/public-health-scotland-statistical-disclosure-protocol-version-22/")
+  text$disclosure_link <- format_excel_hyperlink("PHS Statistical Disclosure Control", "https://publichealthscotland.scot/publications/public-health-scotland-statistical-disclosure-protocol/public-health-scotland-statistical-disclosure-protocol-version-22/")
   text$legend <- c("-   Zero", "..   Not applicable")
 
   ## styles
-  styles <- list()
+  source(here::here("code", "src", "Source_Excel_Styles.R")) # generic styles
 
-  styles$header <- openxlsx::createStyle(fontSize = 18, fontName = "Arial", textDecoration = "bold", wrapText = F)
-  styles$body <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", wrapText = T)
-  styles$subhead <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", textDecoration = "bold", wrapText = F)
-  styles$disclosure_head <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", fontColour = "#FF0000", textDecoration = c("bold", "underline"), wrapText = F)
-  styles$disclosure_body <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", fontColour = "#FF0000", textDecoration = "bold", wrapText = F)
-  ### borders
-  styles$b_left <- openxlsx::createStyle(border = "left")
-  styles$b_top <- openxlsx::createStyle(border = "top")
-  ### aligning
-  styles$a_middle <- openxlsx::createStyle(valign = "center")
-  styles$a_right <- openxlsx::createStyle(halign = "right")
-  styles$a_centre <- openxlsx::createStyle(halign = "center")
-  ### number formatting
-  styles$counts <- openxlsx::createStyle(numFmt = '_(* #,##0_);_(* (#,##0);_(* "-"_);_(@_)') # adds ',' to 1000s numbers, and replaces 0s with "-"
-  styles$percentages <- openxlsx::createStyle(numFmt = '[>0]0.0;[<0]"..";0.0') # positive #s have 1 decimal place, zeroes are 0.0, and minus numbers (placeholder for NAs/NaNs) are coded as ".."
+  styles_gp <- list() # styles specific to this script
+  styles_gp$disclosure_head <- createStyle(fontSize = 12, fontName = "Arial", fontColour = "#FF0000", textDecoration = c("bold", "underline"), wrapText = F)
   ### conditional formatting
-  styles$red <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", fontColour = "#FFFFFF", fgFill = "#911913")
-  styles$yellow <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", fontColour = "#000000", fgFill = "#F7EC6D")
-  styles$green <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", fontColour = "#000000", fgFill = "#6AB42D")
-  styles$red_cond <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", fontColour = "#FFFFFF", bgFill = "#911913")
-  styles$yellow_cond <- createStyle(fontSize = 12, fontName = "Arial", fontColour = "#000000", bgFill = "#F7EC6D")
-  styles$green_cond <- openxlsx::createStyle(fontSize = 12, fontName = "Arial", fontColour = "#000000", bgFill = "#6AB42D")
+  styles_gp$red <- createStyle(fontSize = 12, fontName = "Arial", fontColour = "#FFFFFF", fgFill = "#911913")
+  styles_gp$yellow <- createStyle(fontSize = 12, fontName = "Arial", fontColour = "#000000", fgFill = "#F7EC6D")
+  styles_gp$green <- createStyle(fontSize = 12, fontName = "Arial", fontColour = "#000000", fgFill = "#6AB42D")
+  styles_gp$red_cond <- createStyle(fontSize = 12, fontName = "Arial", fontColour = "#FFFFFF", bgFill = "#911913")
+  styles_gp$yellow_cond <- createStyle(fontSize = 12, fontName = "Arial", fontColour = "#000000", bgFill = "#F7EC6D")
+  styles_gp$green_cond <- createStyle(fontSize = 12, fontName = "Arial", fontColour = "#000000", bgFill = "#6AB42D")
 
   # 2. functions ----
 
@@ -93,71 +80,69 @@ create_aaa_gp_outputs <- function(hb_name, financial_year, coverage_data, selfre
   ## coverage functions
   ### data writing
   write_cov_data <- function(data, row, col) {
-    openxlsx::writeData(wb, "KPI 1.2a", x = data, startRow = row, startCol = col, colNames = F)
+    writeData(wb, "KPI 1.2a", x = data, startRow = row, startCol = col, colNames = F)
   }
 
   ### styling
   add_cov_style <- function(style, row, col) {
-    openxlsx::addStyle(wb, "KPI 1.2a", style = style, rows = row, cols = col, stack = T, gridExpand = T)
+    addStyle(wb, "KPI 1.2a", style = style, rows = row, cols = col, stack = T, gridExpand = T)
   }
 
   ### merge cells
   merge_cov_cells <- function(row, col) {
-    openxlsx::mergeCells(wb, "KPI 1.2a", rows = row, cols = col)
+    mergeCells(wb, "KPI 1.2a", rows = row, cols = col)
   }
 
   ### col widths
   set_cov_col_widths <- function(col, width) {
-    openxlsx::setColWidths(wb, "KPI 1.2a", cols = col, widths = width)
+    setColWidths(wb, "KPI 1.2a", cols = col, widths = width)
   }
 
   ### row heights
   set_cov_row_heights <- function(row, height) {
-    openxlsx::setRowHeights(wb, "KPI 1.2a", rows = row, heights = height)
+    setRowHeights(wb, "KPI 1.2a", rows = row, heights = height)
   }
 
   ## self-referrals functions
   ### data writing
   write_sr_data <- function(data, row, col) {
-    openxlsx::writeData(wb, "Self-referrals", x = data, startRow = row, startCol = col, colNames = F)
+    writeData(wb, "Self-referrals", x = data, startRow = row, startCol = col, colNames = F)
   }
 
   ### styling
   add_sr_style <- function(style, row, col) {
-    openxlsx::addStyle(wb, "Self-referrals", style = style, rows = row, cols = col, stack = T, gridExpand = T)
+    addStyle(wb, "Self-referrals", style = style, rows = row, cols = col, stack = T, gridExpand = T)
   }
 
   ### merge cells
   merge_sr_cells <- function(row, col) {
-    openxlsx::mergeCells(wb, "Self-referrals", rows = row, cols = col)
+    mergeCells(wb, "Self-referrals", rows = row, cols = col)
   }
 
   ### col widths
   set_sr_col_widths <- function(col, width) {
-    openxlsx::setColWidths(wb, "Self-referrals", cols = col, widths = width)
+    setColWidths(wb, "Self-referrals", cols = col, widths = width)
   }
 
   ### row heights
   set_sr_row_heights <- function(row, height) {
-    openxlsx::setRowHeights(wb, "Self-referrals", rows = row, heights = height)
+    setRowHeights(wb, "Self-referrals", rows = row, heights = height)
   }
 
 
   # 3. data filtering ----
   ## KPI 1.2a data
   cov <- coverage_data |>
-    dplyr::filter(hbres == hb_name) |>
-    dplyr::select(!hbres) |>
-    dplyr::mutate(gp_desc = case_when(gp_hb == "Practice outside hb area" ~ NA,
-                               TRUE ~ gp_desc)) |>
-    dplyr::mutate(across(contains("percent"), \(x) replace_na(x, -1000)))
+    filter(hbres == hb_name) |>
+    select(!hbres) |>
+    mutate(across(contains("percent"), \(x) replace_na(x, -1000)))
   # AMc note: this done to allow these NaN/NA percentages (where cohort= 0) to be recoded as ".." in the output
   # replacing empty cells with openxlsx is not possible unfortunately
 
   ## SR data
   sr <- selfref_data |>
-    dplyr::filter(hbres == hb_name) |>
-    dplyr::select(!hbres)
+    filter(hbres == hb_name) |>
+    select(!hbres)
 
 
   # 4: row numbers ----
@@ -189,9 +174,9 @@ create_aaa_gp_outputs <- function(hb_name, financial_year, coverage_data, selfre
 
   # 4. writing Excel ----
   ## create workbook ----
-  wb <- openxlsx::createWorkbook()
-  openxlsx::addWorksheet(wb, sheetName = "KPI 1.2a")
-  openxlsx::addWorksheet(wb, sheetName = "Self-referrals")
+  wb <- createWorkbook()
+  addWorksheet(wb, sheetName = "KPI 1.2a")
+  addWorksheet(wb, sheetName = "Self-referrals")
 
   ## KPI/Coverage workbook ----
 
@@ -232,12 +217,12 @@ create_aaa_gp_outputs <- function(hb_name, financial_year, coverage_data, selfre
 
 
   ### styles: font
-  add_cov_style(styles$header, row = row_refs$cov_title, col = 1) # title
-  add_cov_style(styles$body, row = (row_refs$cov_heads):(row_refs$cov_notes_start+3), col = (1:ncol(cov))) # entire worksheet minus title
-  add_cov_style(styles$subhead, row = row_refs$cov_start, col = 1:ncol(cov)) # total HB row
-  add_cov_style(styles$subhead, row = c(row_refs$cov_key_start, (row_refs$cov_notes_start):(row_refs$cov_notes_start+3)), col = 1) # key and notes
-  add_cov_style(styles$disclosure_head, row = row_refs$cov_disc_start, col = 1) # disclosure header
-  add_cov_style(styles$disclosure_body, row = row_refs$cov_disc_start+1, col = 1) # disclosure body
+  add_cov_style(styles$black_bold_nowrap_18, row = row_refs$cov_title, col = 1) # title
+  add_cov_style(styles$black_12, row = (row_refs$cov_heads):(row_refs$cov_notes_start+3), col = (1:ncol(cov))) # entire worksheet minus title
+  add_cov_style(styles$black_bold_12, row = row_refs$cov_start, col = 1:ncol(cov)) # total HB row
+  add_cov_style(styles$black_bold_12, row = c(row_refs$cov_key_start, (row_refs$cov_notes_start):(row_refs$cov_notes_start+3)), col = 1) # key and notes
+  add_cov_style(styles_gp$disclosure_head, row = row_refs$cov_disc_start, col = 1) # disclosure header
+  add_cov_style(styles$red_bold_12, row = row_refs$cov_disc_start+1, col = 1) # disclosure body
 
   ### styles: border
   #### top
@@ -262,9 +247,9 @@ create_aaa_gp_outputs <- function(hb_name, financial_year, coverage_data, selfre
   add_cov_style(styles$a_middle, row = (row_refs$cov_notes_start+1):(row_refs$cov_notes_start+4), col = 1:2) # notes
 
   ### styles: background fill
-  add_cov_style(styles$red, row = row_refs$cov_key_start+1, col = 1) # key
-  add_cov_style(styles$yellow, row= row_refs$cov_key_start+2, col = 1)
-  add_cov_style(styles$green, row= row_refs$cov_key_start+3, col = 1)
+  add_cov_style(styles_gp$red, row = row_refs$cov_key_start+1, col = 1) # key
+  add_cov_style(styles_gp$yellow, row= row_refs$cov_key_start+2, col = 1)
+  add_cov_style(styles_gp$green, row= row_refs$cov_key_start+3, col = 1)
 
   ### styles: number formatting
   add_cov_style(styles$count, row = (row_refs$cov_start):(row_refs$cov_end), col = 3:4) # counts
@@ -274,21 +259,21 @@ create_aaa_gp_outputs <- function(hb_name, financial_year, coverage_data, selfre
 
   ### conditional formatting
 
-  openxlsx::conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 5, # essential not met
-                                  type = "between", rule = c(0, 74.9), style = styles$red_cond)
-  openxlsx::conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 8,
-                                  type = "between", rule = c(0, 74.9), style = styles$red_cond)
-  openxlsx::conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 5, # essential
-                                  type = "between", rule = c(75, 84.9), style = styles$yellow_cond)
-  openxlsx::conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 8,
-                                  type = "between", rule = c(75, 84.9), style = styles$yellow_cond)
-  openxlsx::conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 5, # desirable
-                                  type = "between", rule = c(85, 100), style = styles$green_cond)
-  openxlsx::conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 8,
-                                  type = "between", rule = c(85, 100), style = styles$green_cond)
+  conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 5, # essential not met
+                        type = "between", rule = c(0, 74.9), style = styles_gp$red_cond)
+  conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 8,
+                        type = "between", rule = c(0, 74.9), style = styles_gp$red_cond)
+  conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 5, # essential
+                        type = "between", rule = c(75, 84.9), style = styles_gp$yellow_cond)
+  conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 8,
+                        type = "between", rule = c(75, 84.9), style = styles_gp$yellow_cond)
+  conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 5, # desirable
+                        type = "between", rule = c(85, 100), style = styles_gp$green_cond)
+  conditionalFormatting(wb, "KPI 1.2a", rows = (row_refs$cov_start):(row_refs$cov_end), cols = 8,
+                        type = "between", rule = c(85, 100), style = styles_gp$green_cond)
 
   ### worksheet formatting
-  openxlsx::showGridLines(wb, "KPI 1.2a", showGridLines = F)
+  showGridLines(wb, "KPI 1.2a", showGridLines = F)
   #### col widths
   set_cov_col_widths(col = 1, width = 30)
   set_cov_col_widths(col = 2, width = 45)
@@ -329,12 +314,12 @@ create_aaa_gp_outputs <- function(hb_name, financial_year, coverage_data, selfre
   write_sr_data(text$sr_notes, row = row_refs$sr_notes_start, col = 1) # notes
 
   ### styles: font
-  add_sr_style(styles$header, row = row_refs$sr_title, col = 1) # title
-  add_sr_style(styles$body, row = (row_refs$sr_heads):(row_refs$cov_key_start+5), col = 1:ncol(sr)) # entire worksheet minus title
-  add_sr_style(styles$subhead, row = row_refs$sr_start, col = 1:ncol(sr)) # hb totals
-  add_sr_style(styles$disclosure_head, row = row_refs$sr_disc_start, col = 1) # disclosure head
-  add_sr_style(styles$disclosure_body, row = row_refs$sr_disc_start+1, col = 1) # disclosure body
-  add_sr_style(styles$subhead, row = (row_refs$sr_notes_start):(row_refs$sr_notes_start+4), col = 1) # notes
+  add_sr_style(styles$black_bold_nowrap_18, row = row_refs$sr_title, col = 1) # title
+  add_sr_style(styles$black_12, row = (row_refs$sr_heads):(row_refs$cov_key_start+5), col = 1:ncol(sr)) # entire worksheet minus title
+  add_sr_style(styles$black_bold_12, row = row_refs$sr_start, col = 1:ncol(sr)) # hb totals
+  add_sr_style(styles_gp$disclosure_head, row = row_refs$sr_disc_start, col = 1) # disclosure head
+  add_sr_style(styles$red_bold_12, row = row_refs$sr_disc_start+1, col = 1) # disclosure body
+  add_sr_style(styles$black_bold_12, row = (row_refs$sr_notes_start):(row_refs$sr_notes_start+4), col = 1) # notes
 
   ### styles: border
   #### top
@@ -374,11 +359,7 @@ create_aaa_gp_outputs <- function(hb_name, financial_year, coverage_data, selfre
   set_sr_row_heights(row = row_refs$sr_notes_start+4, height = 40)
 
   # 5: Write output ----
-  # create GP Practices folder in output path, if necessary
-  ifelse(!dir.exists(file.path(output_path, "GP Practices")), dir.create(file.path(output_path, "GP Practices")), "Directory already exists")
-
-  # save output
   output <- paste0(output_filepath, "/GP Practices/NHS ", hb_name, " Practice level ", simplify_fy(financial_year), ".xlsx")
-  openxlsx::saveWorkbook(wb, output, overwrite = T)
+  saveWorkbook(wb, output, overwrite = T)
   print(paste0("Output saved for NHS ", hb_name))
 }
