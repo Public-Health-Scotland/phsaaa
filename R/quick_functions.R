@@ -119,3 +119,31 @@ format_excel_hyperlink <- function(name, url) {
   return(link)
 }
 
+## format_percentage ----
+
+#' Formatting percentages for outputs
+#'
+#' Converts numerical values to XX.X% format
+#'
+#' @param df dataframe with numerical columns to convert
+#' @param cols column names for application (uses tidy selection)
+#'
+#' @return formatted dataframe
+#' @export
+#'
+#' @examples
+#'
+#' data <- tibble(x = c(2.4, 3.7), y = c(10.9, 82.0))
+#'
+#' format_perc(data, x)
+#'
+#' format_perc(data, contains("y"))
+#' format_perc(data, everything())
+#' format_perc(data, starts_with("x"))
+#'
+format_perc <- function(df, cols) {
+  df |>
+    dplyr::mutate(dplyr::across({{ cols }}, ~sprintf("%.1f", .))) |>
+    dplyr::mutate(dplyr::across({{ cols }}, ~ paste0(., "%")))
+}
+
