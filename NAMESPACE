@@ -2,8 +2,13 @@
 
 export(add_new_rows)
 export(build_history)
+export(create_aaa_gp_outputs)
 export(eval_seasonal_diff)
+export(format_excel_hyperlink)
+export(format_perc)
+export(make_openxlsx_funcs)
 export(query_function)
 export(query_saveWorkbook)
 export(query_write_rds)
+export(simplify_fy)
 export(viz_kpi_finyear)

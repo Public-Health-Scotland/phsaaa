@@ -60,13 +60,9 @@ add_new_rows <- function(df1, df2, ...){
 
 # add_new_rows_tests ------------------------------------------------------
 
-#' Checks for add_new_rows() function
-#'
-#' @param df1 Dataframe, specified within add_new_rows()
-#' @param df2 Dataframe, specified within add_new_rows()
-#'
-#' @return Nothing, unless issue - then error
-#'
+# FUNCTION TO CHECK ADD_NEW_ROWS()
+# 2 dataframes as inputs, no outputs
+
 add_new_rows_tests <- function (df1, df2) {
   stopifnot(
     "df1 is not a dataframe/tibble" = ("data.frame" %in% class(df1))

@@ -49,7 +49,9 @@ Function requires multiple global environment variables to be specified:
 old <- dplyr::tibble(fin_year = c("2021/22", "2022/23"), kpi = "2.2", hbres = "Lothian", value = c(1,2))
 new <- dplyr::tibble(fin_year = "2023/24", kpi = "2.2", hbres = "Lothian", value = 4)
 
-new_hist_db <- build_history(old, new, "2", season_var = "autumn", fys_in_report = c("2021/22", "2022/23", "2023/24"), list_of_fys = list_of_fys, list_of_hbs = list_of_hbs)
+new_hist_db <- build_history(old, new, "2", season_var = "autumn",
+                             fys_in_report = c("2021/22", "2022/23", "2023/24"),
+                             list_of_fys, list_of_hbs)
 
 print(new_hist_db)
 
