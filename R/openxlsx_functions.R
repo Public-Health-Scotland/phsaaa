@@ -20,7 +20,7 @@ make_openxlsx_funcs <- function(wb_name, sheet_name) {
     }
 
   # addStyle
-  custAddStyle <<- function(style, rows, cols, stack = T, gridExpand = T) {
+  custAddStyle <<- function(style, rows, cols, stack = T, gridExpand = T, ...) {
     openxlsx::addStyle(wb_name, sheet_name, style = style, rows = rows, cols = cols, stack = stack, gridExpand = gridExpand, ...)
   }
 
